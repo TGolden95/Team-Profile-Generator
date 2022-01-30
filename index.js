@@ -4,8 +4,9 @@ const Manager = require("./lib/Manager");
 const inquire = require("inquirer");
 const fs = require("fs");
 const path = require("path");
-const htlmgenrator = require("./src/htmlgenerator.js");
-
+const htmlgenerator = require("./src/htmlgenerator.js");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
 const teamMembers = [];
 
 const createManager = () => {
@@ -148,4 +149,10 @@ const createIntern = () => {
     });
 };
 
-const buildTeam = () => {};
+const buildTeam = () => {
+  console.log("Team is complete!");
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR);
+  }
+  fs.writeFileSync(outputPath, htmlgenerator(teamMembers), "utf-8");
+};
